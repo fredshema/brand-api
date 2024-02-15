@@ -1,0 +1,11 @@
+{
+    "watch": [
+        "**/*.ts"
+    ],
+    "ext": ".ts",
+    "ignore": [
+        "node_modules",
+        "dist"
+    ],
+    "exec": "bun run dev"
+}
