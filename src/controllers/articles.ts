@@ -110,3 +110,60 @@ export const deleteArticle: RequestHandler = async (req, res) => {
         });
     }
 }
+
+export const likeArticle: RequestHandler = async (req, res) => {
+    try {
+        const article = await Article.findById(req?.params?.id);
+
+        if (!article) {
+            return res.status(404).json({
+                status: 'error',
+                message: `Article not found`
+            });
+        }
+
+        article.likes++;
+        await article.save();
+
+        return res.status(200).json({
+            status: 'success',
+            data: { article }
+        });
+
+    } catch (error) {
+        return res.status(400).json({
+            status: 'error',
+            message: (error as Error).message
+        });
+    }
+}
+
+export const unlikeArticle: RequestHandler = async (req, res) => {
+    try {
+        const article = await Article.findById(req?.params?.id);
+
+        if (!article) {
+            return res.status(404).json({
+                status: 'error',
+                message: `Article not found`
+            });
+        }
+
+        article.likes--;
+        if (article.likes < 0) {
+            article.likes = 0;
+        }
+        await article.save();
+
+        return res.status(200).json({
+            status: 'success',
+            data: { article }
+        });
+
+    } catch (error) {
+        return res.status(400).json({
+            status: 'error',
+            message: (error as Error).message
+        });
+    }
+}

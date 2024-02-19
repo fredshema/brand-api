@@ -7,9 +7,11 @@
   },
   "include": [
     "src/**/*.ts",
-    "custom.d.ts"
   ],
   "exclude": [
     "node_modules"
+  ],
+  "files": [
+    "custom.d.ts"
   ]
 }

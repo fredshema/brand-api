@@ -14,7 +14,7 @@ export const authenticate: RequestHandler = async (req, res) => {
         if (!user) {
             return res.status(401).json({
                 status: 'error',
-                message: 'Authentication failed: invalid email'
+                message: 'Authentication failed: invalid credentials'
             });
         }
 
@@ -22,7 +22,7 @@ export const authenticate: RequestHandler = async (req, res) => {
         if (!passwordMatch) {
             return res.status(401).json({
                 status: 'error',
-                message: 'Authentication failed: invalid password'
+                message: 'Authentication failed: invalid credentials'
             });
         }
 
