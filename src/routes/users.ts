@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { createUser, deleteUser, getUser, getUsers, updateUser } from "../controllers/users";
+import { verifyToken } from "../middleware/auth";
 import { validateResource } from "../middleware/validateResource";
 import { createUserSchema, deleteUserSchema, getUserSchema, updateUserSchema } from "../validation/user";
 
