@@ -3,7 +3,8 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "strict": true
   },
   "include": [
     "src/**/*.ts",
