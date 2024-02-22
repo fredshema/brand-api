@@ -1,0 +1,29 @@
+# fly.toml app configuration file generated for shema-api on 2024-02-22T17:57:58+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'shema-api'
+primary_region = 'cdg'
+
+[build]
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[mounts]
+  source = "uploads_disk"
+  destination = "/app/uploads"
+  initial_size = "1GB"
+  auto_extend_size_threshold = 80
+  auto_extend_size_increment = "1GB"
+
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = 256
