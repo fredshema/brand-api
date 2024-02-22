@@ -1,18 +1,24 @@
-import { TypeOf, object, string } from "zod";
+import { z } from "zod";
+import { Role } from "../models/user";
 
-export const createUserSchema = object({
-  body: object({
-    name: string({
+export const createUserSchema = z.object({
+  body: z.object({
+    name: z.string({
       required_error: "Name is required",
       invalid_type_error: "Name must be a string",
     }).min(1),
-    email: string({
+    email: z.string({
       required_error: "Email is required",
       invalid_type_error: "Email must be a string",
     }).email({
       message: "Invalid email format",
     }),
-    password: string({
+    role: z.nativeEnum(Role,{
+      errorMap: () => ({
+        message: "Role must be either 'guest' or 'admin'",
+      }),
+    }).optional(),
+    password: z.string({
       required_error: "Password is required",
       invalid_type_error: "Password must be a string",
     }).min(6, {
@@ -21,15 +27,15 @@ export const createUserSchema = object({
   }),
 });
 
-export const updateUserSchema = object({
-  body: object({
-    name: string({
+export const updateUserSchema = z.object({
+  body: z.object({
+    name: z.string({
       required_error: "Name is required",
       invalid_type_error: "Name must be a string",
     })
       .min(1)
       .optional(),
-    email: string({
+    email: z.string({
       required_error: "Email is required",
       invalid_type_error: "Email must be a string",
     })
@@ -37,40 +43,40 @@ export const updateUserSchema = object({
         message: "Invalid email format",
       })
       .optional(),
-    password: string({
+    password: z.string({
       required_error: "Password is required",
       invalid_type_error: "Password must be a string",
     })
       .min(6)
       .optional(),
   }),
-  params: object({
-    id: string({
+  params: z.object({
+    id: z.string({
       required_error: "Id is required",
       invalid_type_error: "Id must be a string",
     }).min(1),
   }),
 });
 
-export const getUserSchema = object({
-  params: object({
-    id: string({
+export const getUserSchema = z.object({
+  params: z.object({
+    id: z.string({
       required_error: "Id is required",
       invalid_type_error: "Id must be a string",
     }).min(1),
   }),
 });
 
-export const deleteUserSchema = object({
-  params: object({
-    id: string({
+export const deleteUserSchema = z.object({
+  params: z.object({
+    id: z.string({
       required_error: "Id is required",
       invalid_type_error: "Id must be a string",
     }).min(1),
   }),
 });
 
-export type CreateUserSchema = TypeOf<typeof createUserSchema>;
-export type UpdateUserSchema = TypeOf<typeof updateUserSchema>;
-export type GetUserSchema = TypeOf<typeof getUserSchema>;
-export type DeleteUserSchema = TypeOf<typeof deleteUserSchema>;
+export type CreateUserSchema = z.TypeOf<typeof createUserSchema>;
+export type UpdateUserSchema = z.TypeOf<typeof updateUserSchema>;
+export type GetUserSchema = z.TypeOf<typeof getUserSchema>;
+export type DeleteUserSchema = z.TypeOf<typeof deleteUserSchema>;
