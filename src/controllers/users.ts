@@ -55,6 +55,7 @@ export const createUser: RequestHandler = async (req, res) => {
         const hashedPassword = await bcrypt.hash(user.password, 10);
         user.password = hashedPassword;
         await user.save();
+        user.password = undefined as any;
         return res.status(201).json({
             status: 'success',
             data: { user }
@@ -122,7 +123,7 @@ export const deleteUser: RequestHandler = async (req, res) => {
             });
         }
 
-        return res.status(200).json({
+        return res.status(204).json({
             status: 'success',
             data: null
         });

@@ -98,9 +98,9 @@ export const deleteArticle: RequestHandler = async (req, res) => {
             });
         }
 
-        return res.status(200).json({
+        return res.status(204).json({
             status: 'success',
-            message: `Article deleted`
+           data: null
         });
 
     } catch (error) {
