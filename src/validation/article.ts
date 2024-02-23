@@ -10,10 +10,6 @@ export const createArticleSchema = object({
       required_error: "Content is required",
       invalid_type_error: "Content must be a string",
     }).min(1),
-    image: string({
-      required_error: "Image is required",
-      invalid_type_error: "Image must be a string",
-    }).min(1),
   }),
 });
 
@@ -28,12 +24,6 @@ export const updateArticleSchema = object({
     content: string({
       required_error: "Content is required",
       invalid_type_error: "Content must be a string",
-    })
-      .min(1)
-      .optional(),
-    image: string({
-      required_error: "Image is required",
-      invalid_type_error: "Image must be a string",
     })
       .min(1)
       .optional(),

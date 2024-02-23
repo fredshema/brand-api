@@ -13,6 +13,7 @@
     "node_modules"
   ],
   "files": [
-    "custom.d.ts"
+    "custom.d.ts",
+    "jest.config.ts",
   ]
 }

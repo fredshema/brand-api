@@ -1,26 +1,28 @@
 import { Router } from "express";
 import {
-    createArticle,
-    deleteArticle,
-    getArticle,
-    getArticles,
-    likeArticle,
-    unlikeArticle,
-    updateArticle,
+  createArticle,
+  deleteArticle,
+  getArticle,
+  getArticles,
+  likeArticle,
+  unlikeArticle,
+  updateArticle,
 } from "../controllers/articles";
 import { verifyToken } from "../middleware/auth";
 import multer from "../middleware/multer";
 import { validateResource } from "../middleware/validateResource";
 import {
-    createArticleSchema,
-    getArticleSchema,
-    updateArticleSchema,
+  createArticleSchema,
+  getArticleSchema,
+  updateArticleSchema,
 } from "../validation/article";
 import { commentRoutes } from "./comments";
 
 const articleRoutes = Router({
   mergeParams: true,
 });
+
+articleRoutes.use("/:articleId/comments", commentRoutes);
 
 articleRoutes.get("/", getArticles);
 articleRoutes.get("/:id", validateResource(getArticleSchema), getArticle);
@@ -30,8 +32,6 @@ articleRoutes.get(
   validateResource(getArticleSchema),
   unlikeArticle
 );
-
-articleRoutes.use("/:articleId/comments", commentRoutes);
 
 articleRoutes.use(verifyToken);
 articleRoutes.post(

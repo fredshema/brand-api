@@ -40,7 +40,8 @@ export const getArticle: RequestHandler = async (req, res) => {
 }
 
 export const createArticle: RequestHandler = async (req, res) => {
-    const article = new Article(req.body);
+    const authorId = req.userId;
+    const article = new Article({ ...req.body, author: authorId });
     try {
         if (req.file) {
             article.image = req.file.path;
