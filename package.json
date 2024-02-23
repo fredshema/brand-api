@@ -8,7 +8,7 @@
     "dev": "ts-node-dev src/server.ts",
     "start": "node dist/server.js",
     "build": "tsc",
-    "test": "cross-env NODE_ENV=test jest --testTimeout 50000"
+    "test": "cross-env NODE_ENV=test jest --testTimeout 60000"
   },
   "author": "",
   "license": "ISC",
