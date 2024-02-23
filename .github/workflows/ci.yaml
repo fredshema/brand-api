@@ -1,4 +1,4 @@
-name: Run Tests
+name: CI/CD
 on:
   push:
     branches:
@@ -7,6 +7,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    name: Run tests
     services:
       mongodb:
         image: mongo:4.4.6
@@ -33,3 +34,14 @@ jobs:
           MONGO_URI: mongodb://admin:admin@localhost:27017
           MONGO_DB_NAME: brand-test
           JWT_SECRET: "LQO!KZMVQD77KMa"
+
+  deploy:
+    needs: test
+    if: needs.test.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_TOKEN }}
