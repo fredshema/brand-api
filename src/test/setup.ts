@@ -6,18 +6,19 @@ var token: string;
 
 const user = {
   name: "Test User",
-  email: "user@test.com",
+  email: Math.random() + "@test.com",
   password: "password",
 };
 
 beforeEach(async () => {
-  jest.spyOn(console, "log").mockImplementation(() => {});
+  // jest.spyOn(console, "log").mockImplementation(() => {});
   await request(app).post("/api/auth/register").send(user);
   const res = await request(app).post("/api/auth/login").send(user);
   token = res.body.data.token;
 });
 
 afterAll(async () => {
+  await mongoose.connection.db?.dropDatabase();
   await mongoose.disconnect();
 });
 

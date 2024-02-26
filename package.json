@@ -1,12 +1,12 @@
 {
-  "name": "simple-express",
+  "name": "shema-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev:watch": "nodemon",
     "dev": "ts-node-dev src/server.ts",
-    "start": "node dist/server.js",
+    "start": "node dist/index.js",
     "build": "tsc",
     "test": "cross-env NODE_ENV=test jest --testTimeout 60000"
   },

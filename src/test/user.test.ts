@@ -1,17 +1,18 @@
+import { ObjectId } from "mongodb";
 import request from "supertest";
 import app from "../index";
 import { token } from "./setup";
 
-var userId: string;
+var userId: ObjectId;
 const user = {
   name: "John Doe",
-  email: "john@doe.com",
+  email: Math.random() + "@john.com",
   password: "password",
 };
 
 const updatedUser = {
   name: "Doe John",
-  email: "doe@john.com",
+  email: Math.random() + "@doe.com",
 };
 
 describe("GET /api/users", () => {
@@ -51,7 +52,7 @@ describe("POST /api/users", () => {
       .set("Authorization", token)
       .send(user);
 
-    userId = res.body.data.user._id;
+    userId = res.body.data?.user._id;
 
     expect(res.status).toEqual(201);
     expect(res.body.status).toEqual("success");
@@ -64,7 +65,7 @@ describe("POST /api/users", () => {
 describe("PUT /api/users/:id", () => {
   it("should update a user", async () => {
     const res = await request(app)
-      .put(`/api/users/${userId}`)
+      .put(`/api/users/${userId.toString()}`)
       .set("Authorization", token)
       .send(updatedUser);
 
@@ -79,7 +80,7 @@ describe("PUT /api/users/:id", () => {
 describe("DELETE /api/users/:id", () => {
   it("should delete a user", async () => {
     const res = await request(app)
-      .delete(`/api/users/${userId}`)
+      .delete(`/api/users/${userId.toString()}`)
       .set("Authorization", token);
 
     expect(res.status).toEqual(204);
