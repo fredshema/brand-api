@@ -28,18 +28,18 @@ jobs:
         with:
           node-version: "20.11.0"
       - run: npm install
-      - run: npm run test-ci
+      - run: npm test
         env:
           CI: true
           MONGO_URI: mongodb://admin:admin@localhost:27017
           MONGO_DB_NAME: brand-test
           JWT_SECRET: "LQO!KZMVQD77KMa"
 
-      - name: Generating coverage badges 
-        uses: jpb06/jest-badges-action@latest
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
         with:
-            branches: main
-            no-commit: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: fredshema/brand-api
 
   deploy:
     needs: test

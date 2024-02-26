@@ -1,7 +1,3 @@
 # Brand API
 
-![Branches](./badges/coverage-branches.svg)
-![Functions](./badges/coverage-functions.svg)
-![Lines](./badges/coverage-lines.svg)
-![Statements](./badges/coverage-statements.svg)
-![Jest coverage](./badges/coverage-jest%20coverage.svg)
+[![codecov](https://codecov.io/gh/fredshema/brand-api/graph/badge.svg?token=PRR2CURFSU)](https://codecov.io/gh/fredshema/brand-api)
