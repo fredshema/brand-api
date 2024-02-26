@@ -6,9 +6,9 @@
   "scripts": {
     "dev:watch": "nodemon",
     "dev": "ts-node-dev src/server.ts",
-    "start": "node dist/index.js",
-    "build": "tsc",
-    "test": "cross-env NODE_ENV=test jest --testTimeout 60000"
+    "start": "node dist/src/server.js",
+    "build": "tsc -p .",
+    "test": "cross-env NODE_ENV=test jest"
   },
   "author": "",
   "license": "ISC",
@@ -36,6 +36,7 @@
     "@types/multer": "^1.4.11",
     "@types/node": "^20.11.19",
     "@types/supertest": "^6.0.2",
+    "codecov": "^3.8.3",
     "cross-env": "^7.0.3",
     "nodemon": "^3.0.3",
     "ts-node-dev": "^2.0.0",

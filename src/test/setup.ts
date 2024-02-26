@@ -11,7 +11,7 @@ const user = {
 };
 
 beforeEach(async () => {
-  // jest.spyOn(console, "log").mockImplementation(() => {});
+  jest.spyOn(console, "log").mockImplementation(() => {});
   await request(app).post("/api/auth/register").send(user);
   const res = await request(app).post("/api/auth/login").send(user);
   token = res.body.data.token;

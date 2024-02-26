@@ -35,6 +35,12 @@ jobs:
           MONGO_DB_NAME: brand-test
           JWT_SECRET: "LQO!KZMVQD77KMa"
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: fredshema/brand-api
+
   deploy:
     needs: test
     if: needs.test.result == 'success'
