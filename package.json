@@ -8,7 +8,8 @@
     "dev": "ts-node-dev src/server.ts",
     "start": "node dist/src/server.js",
     "build": "tsc -p .",
-    "test": "cross-env NODE_ENV=test jest"
+    "test": "cross-env NODE_ENV=test jest",
+    "test-ci": "cross-env NODE_ENV=test jest --ci --coverage"
   },
   "author": "",
   "license": "ISC",
