@@ -16,6 +16,13 @@ import {
   updateCommentSchema,
 } from "../validation/comment";
 
+/**
+ * @swagger
+ * tags:
+ *  name: Comments
+ *  description: Comments management
+ */
+
 const commentRoutes = Router({
   mergeParams: true,
 });

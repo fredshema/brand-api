@@ -7,6 +7,8 @@ app = 'shema-api'
 primary_region = 'cdg'
 
 [build]
+  [build.args]
+    APP_URL = "https://shema-api.fly.dev"
 
 [http_service]
   internal_port = 3000

@@ -5,6 +5,9 @@ import { Role, User } from "../models/user";
 import { createUser } from "./users";
 
 export const authenticate: RequestHandler = async (req, res) => {
+   /**
+   * #swagger.summary = 'Authenticate a user'
+   */
   try {
     const { email, password } = req.body;
     User.schema.path("password").select(true);
@@ -48,6 +51,9 @@ export const authenticate: RequestHandler = async (req, res) => {
 };
 
 export const register: RequestHandler = async (req, res, next) => {
+  /**
+   * #swagger.summary = 'Register a new user'
+   */
   req.body.role = Role.GUEST;
   return createUser(req, res, next);
 };

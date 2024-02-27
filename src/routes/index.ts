@@ -1,16 +1,19 @@
 import { Router } from "express";
-import { articleRoutes } from "./articles";
-import { authRoutes } from "./auth";
-import { userRoutes } from "./users";
+import APIRouter from "./api";
+import DocsRouter from "./docs";
 
 const appRouter = Router();
 
-appRouter.use("/auth", authRoutes);
-appRouter.use("/users", userRoutes);
-appRouter.use("/articles", articleRoutes);
+appRouter.use("/api", APIRouter);
+appRouter.use(DocsRouter);
 
 appRouter.get("/uploads/:image", (req, res) => {
+  // #swagger.ignore = true
   res.sendFile(req.params.image, { root: "uploads" });
 });
 
-export { appRouter };
+appRouter.all("*", (req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
+
+export default appRouter;

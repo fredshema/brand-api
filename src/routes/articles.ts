@@ -16,13 +16,10 @@ import {
   getArticleSchema,
   updateArticleSchema,
 } from "../validation/article";
-import { commentRoutes } from "./comments";
 
 const articleRoutes = Router({
   mergeParams: true,
 });
-
-articleRoutes.use("/:articleId/comments", commentRoutes);
 
 articleRoutes.get("/", getArticles);
 articleRoutes.get("/:id", validateResource(getArticleSchema), getArticle);

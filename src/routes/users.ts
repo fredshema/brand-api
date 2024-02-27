@@ -4,6 +4,8 @@ import { verifyToken } from "../middleware/auth";
 import { validateResource } from "../middleware/validateResource";
 import { createUserSchema, deleteUserSchema, getUserSchema, updateUserSchema } from "../validation/user";
 
+// #swagger.tags = ['Users']
+
 const userRoutes = Router();
 
 userRoutes.use(verifyToken);

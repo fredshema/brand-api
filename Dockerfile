@@ -2,6 +2,8 @@
 
 # Adjust NODE_VERSION as desired
 ARG NODE_VERSION=20.11.0
+ARG APP_URL=http://localhost:3000
+
 FROM node:${NODE_VERSION}-slim as base
 
 LABEL fly_launch_runtime="Node.js"
@@ -30,6 +32,7 @@ RUN npm ci --include=dev
 COPY --link . .
 
 # Build application
+ARG APP_URL
 RUN npm run build
 
 # Remove development dependencies

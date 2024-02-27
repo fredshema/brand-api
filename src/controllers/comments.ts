@@ -2,9 +2,14 @@ import { RequestHandler } from "express";
 import { Comment } from "../models/comment";
 
 export const getComments: RequestHandler = async (req, res) => {
+  /**
+   * #swagger.summary = 'Get all comments'
+   */
   try {
     const articleId = req.params.articleId;
-    const comments = await Comment.find({ article: articleId }).populate("user");
+    const comments = await Comment.find({ article: articleId }).populate(
+      "user"
+    );
 
     return res.status(200).json({
       status: "success",
@@ -20,6 +25,9 @@ export const getComments: RequestHandler = async (req, res) => {
 };
 
 export const getComment: RequestHandler = async (req, res) => {
+  /**
+   * #swagger.summary = 'Get a comment by id'
+   */
   try {
     const articleId = req.params.articleId;
     const commentId = req.params.id;
@@ -49,6 +57,9 @@ export const getComment: RequestHandler = async (req, res) => {
 };
 
 export const createComment: RequestHandler = async (req, res) => {
+  /**
+   * #swagger.summary = 'Create a new comment'
+   */
   const articleId = req.params.articleId;
   const user = req.userId;
   const comment = new Comment({
@@ -74,6 +85,9 @@ export const createComment: RequestHandler = async (req, res) => {
 };
 
 export const updateComment: RequestHandler = async (req, res) => {
+  /**
+   * #swagger.summary = 'Update a comment'
+   */
   try {
     const articleId = req.params.articleId;
     const commentId = req.params.id;
@@ -103,6 +117,9 @@ export const updateComment: RequestHandler = async (req, res) => {
 };
 
 export const deleteComment: RequestHandler = async (req, res) => {
+  /**
+   * #swagger.summary = 'Delete a comment'
+   */
   try {
     const articleId = req.params.articleId;
     const commentId = req.params.id;
@@ -118,10 +135,7 @@ export const deleteComment: RequestHandler = async (req, res) => {
       });
     }
 
-    return res.status(204).json({
-      status: "success",
-      data: null,
-    });
+    return res.status(204).send()
   } catch (error) {
     return res.status(400).json({
       status: "error",
