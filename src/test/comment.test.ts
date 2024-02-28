@@ -43,7 +43,9 @@ describe("POST /api/articles/:id/comments", () => {
 
 describe("GET /api/articles/:id/comments", () => {
   it("should get all comments for an article", async () => {
-    const res = await request(app).get(`/api/articles/${articleId}/comments`);
+    const res = await request(app)
+      .get(`/api/articles/${articleId}/comments`)
+      .set("Authorization", token);
 
     expect(res.status).toEqual(200);
     expect(res.body.status).toEqual("success");
@@ -54,9 +56,9 @@ describe("GET /api/articles/:id/comments", () => {
 
 describe("GET /api/articles/:id/comments/:id", () => {
   it("should get a single comment for an article", async () => {
-    const res = await request(app).get(
-      `/api/articles/${articleId}/comments/${commentId}`
-    );
+    const res = await request(app)
+      .get(`/api/articles/${articleId}/comments/${commentId}`)
+      .set("Authorization", token);
 
     expect(res.status).toEqual(200);
     expect(res.body.status).toEqual("success");
