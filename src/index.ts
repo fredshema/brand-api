@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(appRouter);
 app.use(cors());
+app.use(appRouter);
 
 export default app;
