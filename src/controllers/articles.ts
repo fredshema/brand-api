@@ -100,6 +100,7 @@ export const updateArticle: RequestHandler = async (req, res) => {
 
     const article = await Article.findByIdAndUpdate(id, req.body, {
       new: true,
+      upsert: true,
     });
 
     if (!article) {
