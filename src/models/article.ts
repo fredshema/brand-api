@@ -7,6 +7,7 @@ const articleSchema = new mongoose.Schema({
   image: { type: String },
   likes: { type: Number, default: 0 },
   views: { type: Number, default: 0 },
+  created_at: { type: Date, default: Date.now },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
