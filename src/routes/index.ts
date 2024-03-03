@@ -13,7 +13,10 @@ appRouter.get("/uploads/:image", (req, res) => {
 });
 
 appRouter.all("*", (req, res) => {
-  res.status(404).json({ message: "Route not found" });
+  res.status(404).json({
+    status: "error",
+    message: "Route not found",
+  });
 });
 
 export default appRouter;
