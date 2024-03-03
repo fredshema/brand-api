@@ -6,6 +6,7 @@ const articleSchema = new mongoose.Schema({
   content: { type: String, required: true },
   image: { type: String },
   likes: { type: Number, default: 0 },
+  views: { type: Number, default: 0 },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

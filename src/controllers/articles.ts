@@ -35,6 +35,9 @@ export const getArticle: RequestHandler = async (req, res) => {
       });
     }
 
+    article.views++;
+    await article.save();
+
     return res.status(200).json({
       status: "success",
       data: { article },
