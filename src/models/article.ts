@@ -17,7 +17,7 @@ const articleSchema = new mongoose.Schema({
 articleSchema.virtual("comments", {
   ref: "Comment",
   localField: "_id",
-  foreignField: "article",
+  foreignField: "Article",
 });
 
 articleSchema.post("findOneAndDelete", async function () {

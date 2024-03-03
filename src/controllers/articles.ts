@@ -1,13 +1,22 @@
 import { RequestHandler } from "express";
 import { ObjectId } from "mongodb";
 import { Article } from "../models/article";
+import { Comment } from "../models/comment";
 
 export const getArticles: RequestHandler = async (req, res) => {
   /**
    * #swagger.summary = 'Get all articles'
    */
   try {
-    const articles = await Article.find({});
+    const results = await Article.find({}).lean();
+
+    const articles = await Promise.all(
+      results.map(async (article) => {
+        const commentsCount = await Comment.countDocuments({article: article._id});
+        return { ...article, comments_count: commentsCount };
+      })
+    );
+
     return res.status(200).json({
       status: "success",
       data: { articles },
@@ -123,7 +132,7 @@ export const deleteArticle: RequestHandler = async (req, res) => {
       });
     }
 
-    return res.status(204).send()
+    return res.status(204).send();
   } catch (error) {
     return res.status(400).json({
       status: "error",

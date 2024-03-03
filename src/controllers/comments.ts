@@ -7,9 +7,7 @@ export const getComments: RequestHandler = async (req, res) => {
    */
   try {
     const articleId = req.params.articleId;
-    const comments = await Comment.find({ article: articleId }).populate(
-      "user"
-    );
+    const comments = await Comment.find({ article: articleId }).populate("user");
 
     return res.status(200).json({
       status: "success",
