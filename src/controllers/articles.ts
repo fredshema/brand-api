@@ -12,6 +12,8 @@ export const getArticles: RequestHandler = async (req, res) => {
 
     const articles = await Promise.all(
       results.map(async (article) => {
+        const appURL = process.env.APP_URL || "";
+        article.image = appURL + article?.image;
         const commentsCount = await Comment.countDocuments({
           article: article._id,
         });
