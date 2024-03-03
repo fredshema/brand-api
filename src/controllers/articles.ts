@@ -12,7 +12,9 @@ export const getArticles: RequestHandler = async (req, res) => {
 
     const articles = await Promise.all(
       results.map(async (article) => {
-        const commentsCount = await Comment.countDocuments({article: article._id});
+        const commentsCount = await Comment.countDocuments({
+          article: article._id,
+        });
         return { ...article, comments_count: commentsCount };
       })
     );
@@ -44,8 +46,10 @@ export const getArticle: RequestHandler = async (req, res) => {
       });
     }
 
-    article.views++;
-    await article.save();
+    if (req?.params?.firstView) {
+      article.views++;
+      await article.save();
+    }
 
     return res.status(200).json({
       status: "success",
