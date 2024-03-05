@@ -53,6 +53,9 @@ export const getArticle: RequestHandler = async (req, res) => {
       await article.save();
     }
 
+    const appURL = process.env.APP_URL || "";
+    article.image = appURL + article?.image;
+
     return res.status(200).json({
       status: "success",
       data: { article },
