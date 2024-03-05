@@ -55,6 +55,7 @@ export const getArticle: RequestHandler = async (req, res) => {
 
     const appURL = process.env.APP_URL || "";
     article.image = appURL + article?.image;
+    article.author = (article?.author as any)?.name;
 
     return res.status(200).json({
       status: "success",
