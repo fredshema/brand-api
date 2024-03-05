@@ -3,7 +3,7 @@ import connection from "../services/database";
 
 const commentSchema = new mongoose.Schema({
   content: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
+  created_at: { type: Date, default: Date.now },
   article: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Article",

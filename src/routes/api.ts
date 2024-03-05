@@ -23,18 +23,18 @@ APIRouter.use(
 );
 
 APIRouter.use(
-  "/articles",
-  articleRoutes
-  /**
-   * #swagger.tags = ['Articles']
-   */
-);
-
-APIRouter.use(
   "/articles/:articleId/comments",
   commentRoutes
   /**
    * #swagger.tags = ['Comments']
+   */
+);
+
+APIRouter.use(
+  "/articles",
+  articleRoutes
+  /**
+   * #swagger.tags = ['Articles']
    */
 );
 

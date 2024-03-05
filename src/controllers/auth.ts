@@ -5,7 +5,7 @@ import { Role, User } from "../models/user";
 import { createUser } from "./users";
 
 export const authenticate: RequestHandler = async (req, res) => {
-   /**
+  /**
    * #swagger.summary = 'Authenticate a user'
    */
   try {
@@ -40,7 +40,7 @@ export const authenticate: RequestHandler = async (req, res) => {
     );
     return res.status(200).json({
       status: "success",
-      data: { token },
+      data: { token, role: user.role },
     });
   } catch (error) {
     return res.status(500).json({

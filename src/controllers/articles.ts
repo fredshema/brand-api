@@ -39,25 +39,27 @@ export const getArticle: RequestHandler = async (req, res) => {
    */
   try {
     const id = new ObjectId(req?.params?.id) || "";
-    const article = await Article.findById(id).populate("author");
+    const articleQuery = await Article.findById(id)
+      .populate("author")
+      .populate("comments");
 
-    if (!article) {
+    if (!articleQuery) {
       return res.status(404).json({
         status: "error",
         message: `Article not found`,
       });
     }
 
-    console.log(req?.query);
+    const article = articleQuery.toObject({virtuals: true});
 
     if (req.query?.firstView === "1") {
       article.views++;
-      await article.updateOne({ views: article.views });
+      await Article.updateOne({ _id: id }, { views: article.views });
     }
 
     const appURL = process.env.APP_URL || "";
-    article.image = appURL + article?.image;
-    article.author = (article?.author as any)?.name;
+    article.image = appURL + article?.image ?? null;
+    article.author = (article?.author as any)?.name
 
     return res.status(200).json({
       status: "success",
