@@ -39,7 +39,7 @@ export const getArticle: RequestHandler = async (req, res) => {
    */
   try {
     const id = new ObjectId(req?.params?.id) || "";
-    const article = await Article.findById(id);
+    const article = await Article.findById(id).populate("author");
 
     if (!article) {
       return res.status(404).json({
