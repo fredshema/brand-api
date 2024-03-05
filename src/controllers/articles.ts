@@ -48,9 +48,11 @@ export const getArticle: RequestHandler = async (req, res) => {
       });
     }
 
-    if (req?.params?.firstView) {
+    console.log(req?.query);
+
+    if (req.query?.firstView === "1") {
       article.views++;
-      await article.save();
+      await article.updateOne({ views: article.views });
     }
 
     const appURL = process.env.APP_URL || "";
