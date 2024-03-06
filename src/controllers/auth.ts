@@ -43,7 +43,7 @@ export const authenticate: RequestHandler = async (req, res) => {
       data: { token, role: user.role },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(400).json({
       status: "error",
       error: (error as Error).message,
     });

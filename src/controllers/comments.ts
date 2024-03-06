@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import { Article } from "../models/article";
 import { Comment } from "../models/comment";
 
 export const getComments: RequestHandler = async (req, res) => {
@@ -7,6 +8,15 @@ export const getComments: RequestHandler = async (req, res) => {
    */
   try {
     const articleId = req.params.articleId;
+    const articleExists = await Article.exists({ _id: articleId });
+
+    if (!articleExists) {
+      return res.status(404).json({
+        status: "error",
+        message: `Article not found`,
+      });
+    }
+    
     const comments = await Comment.find({ article: articleId }).populate("user");
 
     return res.status(200).json({
@@ -29,6 +39,7 @@ export const getComment: RequestHandler = async (req, res) => {
   try {
     const articleId = req.params.articleId;
     const commentId = req.params.id;
+
     const comment = await Comment.findOne({
       _id: commentId,
       article: articleId,
@@ -60,6 +71,15 @@ export const createComment: RequestHandler = async (req, res) => {
    */
   const articleId = req.params.articleId;
   const user = req.userId;
+  const articleExists = await Article.exists({ _id: articleId });
+
+  if (!articleExists) {
+    return res.status(404).json({
+      status: "error",
+      message: `Article not found`,
+    });
+  }
+
   const comment = new Comment({
     ...req.body,
     article: articleId,
@@ -75,7 +95,7 @@ export const createComment: RequestHandler = async (req, res) => {
       data: { comment },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(400).json({
       status: "error",
       message: (error as Error).message,
     });

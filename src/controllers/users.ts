@@ -14,7 +14,7 @@ export const getUsers: RequestHandler = async (req, res) => {
       data: { users },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(400).json({
       status: "error",
       message: (error as Error).message,
     });

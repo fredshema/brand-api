@@ -3,6 +3,7 @@ import app from "../index";
 import { token } from "./setup";
 
 var articleId: string;
+const randomId = "5f3e3e3e3e3e3e3e3e3e3e3e";
 
 const article = {
   title: "Hello World",
@@ -53,6 +54,16 @@ describe("GET /api/articles/:id", () => {
   });
 });
 
+describe("GET /api/articles/:id", () => {
+  it("should not find an article", async () => {
+    const res = await request(app).get(`/api/articles/${randomId}`);
+
+    expect(res.status).toEqual(404);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
+  });
+});
+
 describe("GET /api/articles/:id/like", () => {
   it("should like an article", async () => {
     const res = await request(app)
@@ -64,6 +75,16 @@ describe("GET /api/articles/:id/like", () => {
     expect(res.body.data.article).toBeInstanceOf(Object);
     expect(res.body.data.article._id).toEqual(articleId);
     expect(res.body.data.article.likes).toBeGreaterThan(0);
+  });
+
+  it("should not like an article", async () => {
+    const res = await request(app)
+      .get(`/api/articles/${randomId}/like`)
+      .set("Authorization", token);
+
+    expect(res.status).toEqual(404);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
   });
 });
 
@@ -78,6 +99,16 @@ describe("GET /api/articles/:id/unlike", () => {
     expect(res.body.data.article).toBeInstanceOf(Object);
     expect(res.body.data.article._id).toEqual(articleId);
     expect(res.body.data.article.likes).toEqual(0);
+  });
+
+  it("should not unlike an article", async () => {
+    const res = await request(app)
+      .get(`/api/articles/${randomId}/unlike`)
+      .set("Authorization", token);
+
+    expect(res.status).toEqual(404);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
   });
 });
 
@@ -94,6 +125,25 @@ describe("PUT /api/articles/:id", () => {
     expect(res.body.data.article.title).toEqual(updatedArticle.title);
     expect(res.body.data.article.content).toEqual(updatedArticle.content);
   });
+
+  it("should not update an article", async () => {
+    const res = await request(app).put(`/api/articles/${articleId}`).send(updatedArticle);
+
+    expect(res.status).toEqual(401);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
+  });
+
+  it("should not update an article", async () => {
+    const res = await request(app)
+      .put(`/api/articles/${randomId}`)
+      .set("Authorization", token)
+      .send(updatedArticle);
+
+    expect(res.status).toEqual(404);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
+  });
 });
 
 describe("DELETE /api/articles/:id", () => {
@@ -103,5 +153,23 @@ describe("DELETE /api/articles/:id", () => {
       .set("Authorization", token);
 
     expect(res.status).toEqual(204);
+  });
+
+  it("should not delete an article", async () => {
+    const res = await request(app).delete(`/api/articles/${articleId}`);
+
+    expect(res.status).toEqual(401);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
+  });
+
+  it("should not delete an article", async () => {
+    const res = await request(app)
+      .delete(`/api/articles/${randomId}`)
+      .set("Authorization", token);
+
+    expect(res.status).toEqual(404);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
   });
 });

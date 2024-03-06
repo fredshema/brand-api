@@ -4,6 +4,7 @@ import { token } from "./setup";
 
 var articleId: string;
 var commentId: string;
+const randomId = "5f3e3e3e3e3e3e3e3e3e3e3e";
 
 const article = {
   title: "Hello World",
@@ -39,6 +40,27 @@ describe("POST /api/articles/:id/comments", () => {
     expect(commentRes.body.data.comment).toBeInstanceOf(Object);
     expect(commentRes.body.data.comment.content).toEqual(comment.content);
   });
+
+  it("should return 404 if article is not found", async () => {
+    const res = await request(app)
+      .post(`/api/articles/${randomId}/comments`)
+      .set("Authorization", token)
+      .send(comment);
+
+    expect(res.status).toEqual(404);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
+  });
+
+  it("should return 401 if no token is provided", async () => {
+    const res = await request(app)
+      .post(`/api/articles/${articleId}/comments`)
+      .send(comment);
+
+    expect(res.status).toEqual(401);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
+  });
 });
 
 describe("GET /api/articles/:id/comments", () => {
@@ -52,6 +74,16 @@ describe("GET /api/articles/:id/comments", () => {
     expect(res.body.data.comments).toBeInstanceOf(Array);
     expect(res.body.data.comments.length).toBeGreaterThan(0);
   });
+
+  it("should return 404 if article is not found", async () => {
+    const res = await request(app)
+      .get(`/api/articles/${randomId}/comments`)
+      .set("Authorization", token);
+
+    expect(res.status).toEqual(404);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
+  });
 });
 
 describe("GET /api/articles/:id/comments/:id", () => {
@@ -64,6 +96,16 @@ describe("GET /api/articles/:id/comments/:id", () => {
     expect(res.body.status).toEqual("success");
     expect(res.body.data.comment).toBeInstanceOf(Object);
     expect(res.body.data.comment.content).toEqual(comment.content);
+  });
+
+  it("should return 404 if article is not found", async () => {
+    const res = await request(app)
+      .get(`/api/articles/${randomId}/comments/${randomId}`)
+      .set("Authorization", token);
+
+    expect(res.status).toEqual(404);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
   });
 });
 
@@ -79,6 +121,27 @@ describe("PUT /api/articles/:id/comments/:id", () => {
     expect(res.body.data.comment).toBeInstanceOf(Object);
     expect(res.body.data.comment.content).toEqual(updatedComment.content);
   });
+
+  it("should not update a single comment for an article", async () => {
+    const res = await request(app)
+      .put(`/api/articles/${articleId}/comments/${commentId}`)
+      .send(updatedComment);
+
+    expect(res.status).toEqual(401);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
+  });
+
+  it("should return 404 if article is not found", async () => {
+    const res = await request(app)
+      .put(`/api/articles/${randomId}/comments/${randomId}`)
+      .set("Authorization", token)
+      .send(updatedComment);
+
+    expect(res.status).toEqual(404);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
+  });
 });
 
 describe("DELETE /api/articles/:id/comments/:id", () => {
@@ -88,5 +151,25 @@ describe("DELETE /api/articles/:id/comments/:id", () => {
       .set("Authorization", token);
 
     expect(res.status).toEqual(204);
+  });
+
+  it("should not delete a single comment for an article", async () => {
+    const res = await request(app).delete(
+      `/api/articles/${articleId}/comments/${commentId}`
+    );
+
+    expect(res.status).toEqual(401);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
+  });
+
+  it("should not delete a single comment for an article", async () => {
+    const res = await request(app)
+      .delete(`/api/articles/${randomId}/comments/${randomId}`)
+      .set("Authorization", token);
+
+    expect(res.status).toEqual(404);
+    expect(res.body.status).toEqual("error");
+    expect(res.body.message).toBeDefined();
   });
 });

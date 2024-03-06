@@ -26,7 +26,7 @@ export const getArticles: RequestHandler = async (req, res) => {
       data: { articles },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(400).json({
       status: "error",
       message: (error as Error).message,
     });
@@ -50,7 +50,7 @@ export const getArticle: RequestHandler = async (req, res) => {
       });
     }
 
-    const article = articleQuery.toObject({virtuals: true});
+    const article = articleQuery.toObject({ virtuals: true });
 
     if (req.query?.firstView === "1") {
       article.views++;
@@ -59,14 +59,14 @@ export const getArticle: RequestHandler = async (req, res) => {
 
     const appURL = process.env.APP_URL || "";
     article.image = appURL + article?.image ?? null;
-    article.author = (article?.author as any)?.name
+    article.author = (article?.author as any)?.name;
 
     return res.status(200).json({
       status: "success",
       data: { article },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(400).json({
       status: "error",
       message: (error as Error).message,
     });
@@ -90,7 +90,7 @@ export const createArticle: RequestHandler = async (req, res) => {
       data: { article },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(400).json({
       status: "error",
       message: (error as Error).message,
     });
@@ -110,7 +110,6 @@ export const updateArticle: RequestHandler = async (req, res) => {
 
     const article = await Article.findByIdAndUpdate(id, req.body, {
       new: true,
-      upsert: true,
     });
 
     if (!article) {
@@ -138,14 +137,16 @@ export const deleteArticle: RequestHandler = async (req, res) => {
    */
   try {
     const id = new ObjectId(req?.params?.id);
-    const article = await Article.findByIdAndDelete(id);
+    const articleExists = await Article.exists({ _id: id });
 
-    if (!article) {
+    if (!articleExists) {
       return res.status(404).json({
         status: "error",
         message: `Article not found`,
       });
     }
+    
+    const article = await Article.findByIdAndDelete(id);
 
     return res.status(204).send();
   } catch (error) {
