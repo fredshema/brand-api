@@ -23,7 +23,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@master
       - uses: actions/setup-node@v3
         with:
           node-version: "20.11.0"
@@ -36,10 +36,11 @@ jobs:
           JWT_SECRET: "LQO!KZMVQD77KMa"
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: fredshema/brand-api
+          directory: ./coverage
+          fail_ci_if_error: true
 
   deploy:
     needs: test
