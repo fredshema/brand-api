@@ -1,6 +1,6 @@
 # Shema's brand API
 
-[![CI/CD](https://github.com/fredshema/brand-api/actions/workflows/ci.yaml/badge.svg)](https://github.com/fredshema/brand-api/actions/workflows/ci.yaml) [![codecov](https://codecov.io/gh/fredshema/brand-api/graph/badge.svg?token=PRR2CURFSU)](https://codecov.io/gh/fredshema/brand-api)
+[![CI/CD](https://github.com/fredshema/brand-api/actions/workflows/ci.yaml/badge.svg)](https://github.com/fredshema/brand-api/actions/workflows/ci.yaml) [![codecov](https://codecov.io/gh/fredshema/brand-api/graph/badge.svg?token=PRR2CURFSU)](https://codecov.io/gh/fredshema/brand-api) ![License](https://img.shields.io/github/license/fredshema/brand-api)
 
 This repository contains the source code for the brand API. The API is built using the Node.js [express](https://expressjs.com/) framework and uses [MongoDB](https://www.mongodb.com/) as the database.
 
