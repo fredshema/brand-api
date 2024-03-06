@@ -7,7 +7,7 @@ export const getMessages: RequestHandler = async (req, res) => {
    * #swagger.summary = 'Get all messages'
    */
   try {
-    const messages = await Message.find({});
+    const messages = await Message.find({}).sort({ created_at: 'desc'});
     return res.status(200).json({
       status: "success",
       data: { messages },
