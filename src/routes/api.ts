@@ -2,6 +2,7 @@ import { Router } from "express";
 import { articleRoutes } from "./articles";
 import { authRoutes } from "./auth";
 import { commentRoutes } from "./comments";
+import { messageRoutes } from "./messages";
 import { userRoutes } from "./users";
 
 const APIRouter = Router();
@@ -35,6 +36,14 @@ APIRouter.use(
   articleRoutes
   /**
    * #swagger.tags = ['Articles']
+   */
+);
+
+APIRouter.use(
+  "/messages",
+  messageRoutes
+  /**
+   * #swagger.tags = ['Messages']
    */
 );
 
