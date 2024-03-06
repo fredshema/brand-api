@@ -2,7 +2,7 @@
   "verbose": true,
   "rootDir": "src",
   "collectCoverage": true,
-  "coverageReporters": ["json-summary"],
+  "coverageReporters": ["cobertura"],
   "coverageDirectory": "../coverage",
   "testTimeout": 60000,
   "transform": {
